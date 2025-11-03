@@ -1,6 +1,5 @@
 import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
-// @ts-expect-error: CSS side-effect import without type declarations
 import './globals.css';
 import AppLayout from '@/components/AppLayout';
 
