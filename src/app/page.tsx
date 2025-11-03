@@ -1,102 +1,329 @@
-import Image from "next/image";
+'use client';
+
+import { useState, useEffect } from 'react';
+import Image from 'next/image';
+import Link from 'next/link';
+import DestinationCard from '@/components/DestinationCard';
+import { Destination } from '@/types';
+import {
+  MapPin,
+  Route as RouteIcon,
+  Star,
+  ArrowRight,
+  Map,
+  Sparkles,
+} from 'lucide-react';
+
+// Data dummy untuk landing page
+const featuredDestinations: Destination[] = [
+  {
+    place_id: 'dummy-1',
+    order: 1,
+    nama: 'Pusat Oleh-Oleh Bu Rudy',
+    kategori: ['belanja', 'wisata_kuliner'],
+    coordinates: [-7.2575, 112.7521],
+    deskripsi:
+      'Pusat oleh-oleh khas Surabaya dengan berbagai pilihan makanan ringan dan kerajinan lokal.',
+    rating: 4.5,
+  },
+  {
+    place_id: 'dummy-2',
+    order: 2,
+    nama: 'Nasi Goreng Kambing',
+    kategori: ['makanan_berat', 'halal', 'wisata_kuliner'],
+    coordinates: [-7.2456, 112.7378],
+    deskripsi:
+      'Kuliner legendaris Surabaya dengan cita rasa nasi goreng kambing yang khas dan lezat.',
+    rating: 4.7,
+  },
+  {
+    place_id: 'dummy-3',
+    order: 3,
+    nama: 'Taman Bunga',
+    kategori: ['wisata_alam'],
+    coordinates: [-7.2389, 112.7289],
+    deskripsi:
+      'Taman indah dengan berbagai jenis bunga warna-warni, cocok untuk bersantai dan berfoto.',
+    rating: 4.3,
+  },
+];
 
 export default function Home() {
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
   return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50 to-gray-50">
+      {/* Hero Section */}
+      <div className="relative h-[600px] w-full overflow-hidden">
         <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
+          src="https://images.unsplash.com/photo-1555881400-74d7acaacd8b?q=80&w=2070"
+          alt="Surabaya Tourism"
+          fill
+          className="object-cover brightness-50"
           priority
         />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+        {/* Animated Background Elements */}
+        <div className="absolute inset-0">
+          <div className="absolute top-0 left-0 w-96 h-96 bg-emerald-500/20 rounded-full blur-3xl animate-pulse"></div>
+          <div
+            className="absolute bottom-0 right-0 w-96 h-96 bg-slate-500/20 rounded-full blur-3xl animate-pulse"
+            style={{ animationDelay: '1s' }}
+          ></div>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
+
+        {/* Grid Pattern Overlay */}
+        <div
+          className="absolute inset-0 opacity-[0.03]"
+          style={{
+            backgroundImage:
+              'linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px)',
+            backgroundSize: '50px 50px',
+          }}
+        ></div>
+
+        {/* Overlay with title */}
+        <div className="absolute inset-0 bg-gradient-to-r from-slate-900/90 via-slate-900/70 to-transparent flex items-center">
+          <div className="container mx-auto px-6 md:px-12">
+            <div className="max-w-3xl">
+              <h1 className="text-6xl md:text-8xl font-bold text-white mb-6 drop-shadow-2xl tracking-tight">
+                <span className="bg-clip-text text-transparent bg-gradient-to-r from-white via-white to-emerald-300">
+                  REKOMENDASI
+                </span>
+                <br />
+                <span className="bg-clip-text text-transparent bg-gradient-to-r from-emerald-300 via-white to-white">
+                  WISATA SURABAYA
+                </span>
+              </h1>
+              <p className="text-2xl text-white/90 mb-10 font-light tracking-wide">
+                Temukan destinasi wisata terbaik di Surabaya dengan rekomendasi
+                rute yang optimal
+              </p>
+              <Link
+                href="/routes"
+                className="group/btn relative inline-flex items-center gap-3 bg-gradient-to-r from-slate-700 via-slate-800 to-slate-900 hover:from-slate-800 hover:via-slate-900 hover:to-black text-white font-bold text-lg py-5 px-10 transition-all duration-300 shadow-2xl hover:shadow-emerald-500/20 overflow-hidden"
+              >
+                <span className="absolute inset-0 bg-white/0 group-hover/btn:bg-white/10 transition-all duration-300"></span>
+                <span className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-white/50 to-transparent translate-x-[-100%] group-hover/btn:translate-x-[100%] transition-transform duration-1000"></span>
+                <span className="relative">REKOMENDASIKAN RUTE</span>
+                <ArrowRight className="w-6 h-6 relative transition-transform group-hover/btn:translate-x-2 duration-300" />
+              </Link>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Featured Destinations */}
+      <div className="container mx-auto px-6 md:px-12 py-20">
+        <div className="relative group mb-12">
+          {/* Glow Effect */}
+          <div className="absolute -inset-1 bg-gradient-to-r from-slate-600 via-slate-700 to-slate-800 opacity-20 blur-xl group-hover:opacity-30 transition-opacity duration-500"></div>
+
+          <div className="relative bg-white shadow-2xl border border-gray-100 overflow-hidden">
+            {/* Accent Bar */}
+            <div className="h-2 bg-gradient-to-r from-slate-700 via-slate-600 to-slate-800"></div>
+
+            <div className="p-10">
+              {/* Section Header */}
+              <div className="flex items-center justify-between mb-8">
+                <div className="flex items-center gap-4">
+                  <div className="relative">
+                    <div className="absolute inset-0 bg-slate-700 blur-lg opacity-50"></div>
+                    <div className="relative w-14 h-14 bg-gradient-to-br from-slate-700 to-slate-900 flex items-center justify-center">
+                      <Star className="w-7 h-7 text-white fill-white" />
+                    </div>
+                  </div>
+                  <div>
+                    <h2 className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-slate-800 to-slate-900">
+                      Destinasi Populer
+                    </h2>
+                    <p className="text-gray-600 font-medium mt-1">
+                      Jelajahi tempat-tempat menarik di Surabaya
+                    </p>
+                  </div>
+                </div>
+                <Link
+                  href="/routes"
+                  className="group/link flex items-center gap-2 text-slate-700 hover:text-slate-900 font-bold transition-colors duration-300"
+                >
+                  <span>Lihat Semua</span>
+                  <ArrowRight className="w-5 h-5 transition-transform group-hover/link:translate-x-1 duration-300" />
+                </Link>
+              </div>
+
+              {isClient && (
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {featuredDestinations.map((dest, idx) => (
+                    <DestinationCard key={idx} destination={dest} />
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Features Section */}
+      <div className="bg-gradient-to-br from-slate-50 via-gray-50 to-slate-50 py-20">
+        <div className="container mx-auto px-6 md:px-12">
+          <div className="text-center mb-16">
+            <div className="inline-block relative mb-6">
+              <div className="absolute inset-0 bg-emerald-600 blur-2xl opacity-20 animate-pulse"></div>
+              <div className="relative w-20 h-20 bg-gradient-to-br from-emerald-600 to-teal-600 flex items-center justify-center mx-auto">
+                <Sparkles className="w-10 h-10 text-white" />
+              </div>
+            </div>
+            <h2 className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-slate-800 to-slate-900 mb-4">
+              Kenapa Memilih Kami?
+            </h2>
+            <p className="text-gray-600 text-lg font-medium">
+              Teknologi terkini untuk pengalaman wisata terbaik
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {/* Feature 1 */}
+            <div className="group relative">
+              <div className="absolute -inset-1 bg-gradient-to-r from-slate-600 via-slate-700 to-slate-800 opacity-0 group-hover:opacity-20 blur-xl transition-opacity duration-500"></div>
+              <div className="relative bg-white shadow-lg hover:shadow-2xl border border-gray-100 overflow-hidden transition-all duration-300 transform hover:scale-[1.02]">
+                <div className="h-1.5 bg-gradient-to-r from-slate-700 to-slate-900"></div>
+                <div className="p-8 text-center">
+                  <div className="relative inline-block mb-6">
+                    <div className="absolute inset-0 bg-slate-700 blur-md opacity-50"></div>
+                    <div className="relative w-16 h-16 bg-gradient-to-br from-slate-700 to-slate-900 flex items-center justify-center mx-auto">
+                      <RouteIcon className="w-8 h-8 text-white" />
+                    </div>
+                  </div>
+                  <h3 className="text-2xl font-bold text-slate-800 mb-4">
+                    Rute Optimal
+                  </h3>
+                  <p className="text-gray-600 leading-relaxed">
+                    Dapatkan rekomendasi rute terbaik menggunakan AI untuk
+                    mengoptimalkan perjalanan Anda
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Feature 2 */}
+            <div className="group relative">
+              <div className="absolute -inset-1 bg-gradient-to-r from-emerald-500 via-teal-500 to-emerald-600 opacity-0 group-hover:opacity-20 blur-xl transition-opacity duration-500"></div>
+              <div className="relative bg-white shadow-lg hover:shadow-2xl border border-gray-100 overflow-hidden transition-all duration-300 transform hover:scale-[1.02]">
+                <div className="h-1.5 bg-gradient-to-r from-emerald-600 to-teal-600"></div>
+                <div className="p-8 text-center">
+                  <div className="relative inline-block mb-6">
+                    <div className="absolute inset-0 bg-emerald-600 blur-md opacity-50"></div>
+                    <div className="relative w-16 h-16 bg-gradient-to-br from-emerald-600 to-teal-600 flex items-center justify-center mx-auto">
+                      <Map className="w-8 h-8 text-white" />
+                    </div>
+                  </div>
+                  <h3 className="text-2xl font-bold text-emerald-700 mb-4">
+                    Peta Interaktif
+                  </h3>
+                  <p className="text-gray-600 leading-relaxed">
+                    Visualisasi rute secara real-time dengan OpenStreetMap dan
+                    OSRM routing
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Feature 3 */}
+            <div className="group relative">
+              <div className="absolute -inset-1 bg-gradient-to-r from-amber-400 via-amber-500 to-amber-600 opacity-0 group-hover:opacity-20 blur-xl transition-opacity duration-500"></div>
+              <div className="relative bg-white shadow-lg hover:shadow-2xl border border-gray-100 overflow-hidden transition-all duration-300 transform hover:scale-[1.02]">
+                <div className="h-1.5 bg-gradient-to-r from-amber-500 to-amber-600"></div>
+                <div className="p-8 text-center">
+                  <div className="relative inline-block mb-6">
+                    <div className="absolute inset-0 bg-amber-500 blur-md opacity-50"></div>
+                    <div className="relative w-16 h-16 bg-gradient-to-br from-amber-500 to-amber-600 flex items-center justify-center mx-auto">
+                      <Star className="w-8 h-8 text-white fill-white" />
+                    </div>
+                  </div>
+                  <h3 className="text-2xl font-bold text-amber-600 mb-4">
+                    Rekomendasi Terpercaya
+                  </h3>
+                  <p className="text-gray-600 leading-relaxed">
+                    Destinasi wisata pilihan dengan rating dan review dari
+                    pengunjung lain
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Call to Action */}
+      <div className="relative bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 py-24 overflow-hidden">
+        {/* Animated Background Elements */}
+        <div className="absolute inset-0">
+          <div className="absolute top-0 left-0 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl animate-pulse"></div>
+          <div
+            className="absolute bottom-0 right-0 w-96 h-96 bg-white/5 rounded-full blur-3xl animate-pulse"
+            style={{ animationDelay: '1s' }}
+          ></div>
+        </div>
+
+        {/* Grid Pattern */}
+        <div
+          className="absolute inset-0 opacity-[0.02]"
+          style={{
+            backgroundImage:
+              'linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px)',
+            backgroundSize: '50px 50px',
+          }}
+        ></div>
+
+        <div className="container mx-auto px-6 md:px-12 text-center relative z-10">
+          <div className="inline-block relative mb-6">
+            <div className="absolute inset-0 bg-emerald-500 blur-2xl opacity-30 animate-pulse"></div>
+            <div className="relative w-20 h-20 bg-white/10 backdrop-blur-md flex items-center justify-center border border-white/20 mx-auto">
+              <MapPin className="w-10 h-10 text-white" />
+            </div>
+          </div>
+
+          <h2 className="text-5xl font-bold text-white mb-6 tracking-tight">
+            <span className="bg-clip-text text-transparent bg-gradient-to-r from-white via-emerald-300 to-white">
+              Siap Menjelajahi Surabaya?
+            </span>
+          </h2>
+          <p className="text-2xl text-white/80 mb-10 font-light max-w-3xl mx-auto">
+            Dapatkan rekomendasi rute wisata yang dipersonalisasi berdasarkan
+            lokasi Anda dengan teknologi AI terkini
+          </p>
+          <Link
+            href="/routes"
+            className="group/btn relative inline-flex items-center gap-3 bg-gradient-to-r from-emerald-600 via-emerald-700 to-teal-700 hover:from-emerald-700 hover:via-emerald-800 hover:to-teal-800 text-white font-bold text-xl py-6 px-12 transition-all duration-300 shadow-2xl hover:shadow-emerald-500/30 overflow-hidden"
+          >
+            <span className="absolute inset-0 bg-white/0 group-hover/btn:bg-white/10 transition-all duration-300"></span>
+            <span className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-white/50 to-transparent translate-x-[-100%] group-hover/btn:translate-x-[100%] transition-transform duration-1000"></span>
+            <RouteIcon className="w-7 h-7 relative transition-transform group-hover/btn:rotate-12 duration-300" />
+            <span className="relative">BUAT RUTE SEKARANG</span>
+            <ArrowRight className="w-7 h-7 relative transition-transform group-hover/btn:translate-x-2 duration-300" />
+          </Link>
+        </div>
+      </div>
+
+      {/* Footer */}
+      <footer className="bg-gradient-to-b from-slate-900 to-black text-white py-12 border-t border-slate-800">
+        <div className="container mx-auto px-6 md:px-12">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 bg-gradient-to-br from-emerald-600 to-teal-600 flex items-center justify-center">
+                <MapPin className="w-5 h-5 text-white" />
+              </div>
+              <span className="font-bold text-lg">Wisata Surabaya</span>
+            </div>
+            <p className="text-gray-400 font-medium">
+              &copy; 2025 Rekomendasi Wisata Surabaya. All rights reserved.
+            </p>
+          </div>
+        </div>
       </footer>
     </div>
   );
