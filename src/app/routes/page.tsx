@@ -4,13 +4,18 @@ import { useState, useCallback } from 'react';
 import dynamic from 'next/dynamic';
 import { MapPin, Route as RouteIcon, Star } from 'lucide-react';
 import DestinationCard from '@/components/DestinationCard';
-import MapComponent from '@/components/MapComponent';
 import { generateRoutes, getOSRMRoute } from '@/lib/api';
 import { ApiResponse, Route } from '@/types';
 
 // Dynamic import for LocationPickerMap to avoid SSR issues
 const LocationPickerMap = dynamic(
   () => import('@/components/LocationPickerMap'),
+  { ssr: false }
+);
+
+// Dynamic import for MapComponent to avoid SSR issues with Leaflet
+const MapComponent = dynamic(
+  () => import('@/components/MapComponent'),
   { ssr: false }
 );
 
